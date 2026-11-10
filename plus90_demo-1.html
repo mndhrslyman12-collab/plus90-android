@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0b1018">
+<title>+90 | نسخة تجريبية</title>
+<style>
+:root{--bg:#090e15;--panel:#111a26;--panel2:#172333;--line:#243448;--text:#f3f6fa;--muted:#93a3b7;--gold:#e5b957;--green:#50d6a0;--blue:#65b8ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;padding-bottom:82px}
+header{position:sticky;top:0;z-index:5;background:rgba(9,14,21,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 17px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:25px;letter-spacing:-1px}.brand b{color:var(--gold)}.mark{width:35px;height:35px;border:2px solid var(--gold);border-radius:11px;display:grid;place-items:center;color:var(--gold);font-size:15px;transform:rotate(-7deg)}
+.top-actions{display:flex;gap:9px}.iconbtn{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:12px;width:38px;height:38px;font-size:17px}
+main{max-width:620px;margin:auto;padding:16px}.page{display:none}.page.active{display:block}
+.eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:1.4px}.hero{background:linear-gradient(135deg,#1b2c40,#101923 65%);border:1px solid #30465e;border-radius:22px;padding:20px;margin-bottom:18px;position:relative;overflow:hidden}.hero:after{content:"+90";position:absolute;left:-3px;bottom:-25px;font-size:90px;font-weight:1000;color:#ffffff08;direction:ltr}.hero h1{font-size:25px;margin:8px 0}.hero p{color:#b5c2d0;font-size:13px;line-height:1.7;margin:0 0 15px;max-width:85%}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:800;background:var(--gold);color:#15191f;font-size:13px}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:20px 0 11px}.section-head h2{font-size:17px;margin:0}.muted{color:var(--muted);font-size:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin-bottom:11px}
+.match{display:flex;align-items:center;justify-content:space-between;gap:8px}.team{flex:1;text-align:center;font-weight:750;font-size:13px}.crest{width:34px;height:34px;border-radius:11px;background:var(--panel2);display:grid;place-items:center;margin:0 auto 6px;font-size:19px}.score{text-align:center;min-width:70px;font-weight:900;font-size:19px}.live{color:#ff7373;font-size:10px;font-weight:900}.tag{display:inline-block;padding:4px 8px;border-radius:8px;background:#243345;color:#c8d5e3;font-size:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:var(--panel);border:1px solid var(--line);padding:14px;border-radius:15px}.stat strong{font-size:23px;display:block}.stat span{font-size:11px;color:var(--muted)}
+.news{display:flex;gap:12px;align-items:flex-start}.newsimg{width:82px;height:72px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#314c63,#182332);display:grid;place-items:center;font-size:27px}.news h3{font-size:13px;line-height:1.55;margin:0 0 6px}.news p{font-size:11px;color:var(--muted);margin:0}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:8;background:rgba(12,18,27,.97);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}
+.nav{border:0;background:none;color:var(--muted);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:52px}.nav i{font-style:normal;font-size:19px}.nav.active{color:var(--gold)}
+.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}.tab{white-space:nowrap;background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 12px;border-radius:20px;font-size:11px}.tab.selected{background:#3a3020;color:#f3d58f;border-color:#856a34}
+.post-head{display:flex;align-items:center;gap:9px}.avatar{width:36px;height:36px;border-radius:50%;background:#263b50;display:grid;place-items:center;font-weight:900}.postname{font-size:12px;font-weight:800}.posttime{font-size:10px;color:var(--muted)}.post p{font-size:13px;line-height:1.7;color:#dce4ed}.actions{display:flex;gap:18px;border-top:1px solid var(--line);padding-top:10px;color:var(--muted);font-size:11px}.actions button{border:0;background:none;color:inherit;padding:0}
+.pitch{height:210px;border:1px solid #3b5a45;border-radius:17px;background:linear-gradient(145deg,#153b30,#10251f);position:relative;overflow:hidden;padding:12px}.pitch:before{content:"";position:absolute;inset:12px;border:1px solid #ffffff38;border-radius:7px}.pitch:after{content:"";position:absolute;width:90px;height:90px;border:1px solid #ffffff38;border-radius:50%;left:calc(50% - 45px);top:calc(50% - 45px)}.player{position:absolute;z-index:2;background:#f1f4f7;color:#17202a;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;font-size:9px;font-weight:900;border:2px solid var(--gold)}.p1{top:25px;left:calc(50% - 14px)}.p2{top:75px;left:18%}.p3{top:75px;left:42%}.p4{top:75px;left:67%}.p5{bottom:25px;left:calc(50% - 14px)}
+.profile{text-align:center;padding:22px}.bigavatar{width:76px;height:76px;border-radius:25px;background:linear-gradient(135deg,#314d67,#172536);display:grid;place-items:center;font-size:30px;margin:0 auto 12px;border:1px solid #48617a}.verified{color:var(--gold);font-size:12px}.notice{border:1px dashed #5a4a2d;background:#201d16;color:#e7d6ad;padding:12px;border-radius:13px;font-size:11px;line-height:1.6;margin-top:14px}
+input,textarea{width:100%;background:#0d1520;color:white;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;font-size:13px;margin:6px 0}textarea{min-height:85px;resize:vertical}
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#e5b957;color:#111;padding:10px 16px;border-radius:20px;font-size:12px;font-weight:800;display:none;z-index:20;white-space:nowrap}
+</style>
+</head>
+<body>
+<header><div class="brand"><span class="mark">90</span><span><b>+</b>90</span></div><div class="top-actions"><button class="iconbtn" onclick="toast('الإشعارات ستتوفر في النسخة القادمة')">♧</button><button class="iconbtn" onclick="toast('أهلاً بك في +90')">☰</button></div></header>
+<main>
+<section class="page active" id="home">
+ <div class="hero"><div class="eyebrow">THE GAME. THE COMMUNITY. THE PASSION.</div><h1>كرة القدم تبدأ من هنا.</h1><p>تابع المباريات، اكتشف الأخبار، نافس أصدقاءك وكن جزءاً من مجتمع +90.</p><button class="btn" onclick="showPage('fantasy')">ادخل الفانتازي ←</button></div>
+ <div class="section-head"><h2>مباريات اليوم</h2><span class="muted">عرض الكل</span></div>
+ <div class="card"><div class="match"><div class="team"><div class="crest">🔴</div>ليفربول</div><div class="score"><span class="live">● قريباً</span><br>20:00</div><div class="team"><div class="crest">🔵</div>مانشستر سيتي</div></div><div style="text-align:center;margin-top:10px"><span class="tag">الدوري الإنجليزي</span></div></div>
+ <div class="card"><div class="match"><div class="team"><div class="crest">⚪</div>ريال مدريد</div><div class="score"><span class="live">● مباشر</span><br>2 - 1</div><div class="team"><div class="crest">🔴</div>برشلونة</div></div><div style="text-align:center;margin-top:10px"><span class="tag">الدوري الإسباني · بيانات تجريبية</span></div></div>
+ <div class="section-head"><h2>آخر الأخبار</h2><span class="muted">المزيد</span></div>
+ <div class="card news"><div class="newsimg">⚽</div><div><h3>كل ما تحتاج معرفته عن أبرز مواجهات هذا الأسبوع</h3><p>تحليل ومتابعة · قبل 20 دقيقة</p></div></div>
+ <div class="card news"><div class="newsimg">🏆</div><div><h3>سباق الصدارة يشتعل في الدوريات الأوروبية</h3><p>أخبار كرة القدم · قبل ساعة</p></div></div>
+</section>
+<section class="page" id="matches">
+ <div class="section-head"><h2>المباريات والنتائج</h2><span class="tag">مركز المباريات</span></div>
+ <div class="tabs"><button class="tab selected" onclick="selectTab(this)">الكل</button><button class="tab" onclick="selectTab(this)">إنجلترا</button><button class="tab" onclick="selectTab(this)">إسبانيا</button><button class="tab" onclick="selectTab(this)">إيطاليا</button><button class="tab" onclick="selectTab(this)">أبطال أوروبا</button></div>
+ <div class="card"><div class="muted" style="margin-bottom:12px">الدوري الإسباني · بيانات تجريبية</div><div class="match"><div class="team"><div class="crest">⚪</div>ريال مدريد</div><div class="score">2 - 1</div><div class="team"><div class="crest">🔴</div>برشلونة</div></div><div class="muted" style="text-align:center;margin-top:10px">انتهت المباراة</div></div>
+ <div class="card"><div class="muted" style="margin-bottom:12px">الدوري الإنجليزي · بيانات تجريبية</div><div class="match"><div class="team"><div class="crest">🔴</div>ليفربول</div><div class="score">20:00</div><div class="team"><div class="crest">🔵</div>مانشستر سيتي</div></div><div class="muted" style="text-align:center;margin-top:10px">موعد المباراة</div></div>
+ <div class="notice">هذه النتائج والمواعيد أمثلة للعرض فقط، وليست بيانات مباشرة.</div>
+</section>
+<section class="page" id="fantasy">
+ <div class="section-head"><h2>+90 Fantasy</h2><span class="tag">مجاني</span></div>
+ <div class="hero"><div class="eyebrow">BUILD YOUR LEGACY</div><h1>اختَر فريقك. نافس العالم.</h1><p>ميزانية فريقك 120 مليوناً · 15 لاعباً · 6 بطولات.</p><button class="btn" onclick="toast('قريباً: إنشاء فريقك وحفظ اختياراتك')">إنشاء فريقي</button></div>
+ <div class="grid2"><div class="stat"><strong>120M</strong><span>الميزانية</span></div><div class="stat"><strong>15</strong><span>لاعباً في الفريق</span></div><div class="stat"><strong>11</strong><span>لاعباً أساسياً</span></div><div class="stat"><strong>3</strong><span>حد أقصى من النادي</span></div></div>
+ <div class="section-head"><h2>تشكيلتك التجريبية</h2><span class="muted">4-3-3</span></div>
+ <div class="pitch"><span class="player p1">GK</span><span class="player p2">DEF</span><span class="player p3">MID</span><span class="player p4">FWD</span><span class="player p5">GK</span></div>
+ <div class="notice">الفانتازي في هذه النسخة واجهة تجريبية. اختيار اللاعبين واحتساب النقاط سيُبنيان في المرحلة التالية.</div>
+</section>
+<section class="page" id="community">
+ <div class="section-head"><h2>+90 COMMUNITY</h2><span class="tag">كرة القدم فقط</span></div>
+ <div class="card"><textarea id="postText" placeholder="شن رأيك في مباراة اليوم؟ شاركنا تحليلك الكروي..."></textarea><button class="btn" onclick="addPost()">نشر المنشور</button></div>
+ <div id="posts">
+ <div class="card post"><div class="post-head"><div class="avatar">م</div><div><div class="postname">مشجع +90 <span class="verified">◆</span></div><div class="posttime">منذ 12 دقيقة · تحليل مباراة</div></div></div><p>شن تتوقعوا تكون نتيجة المواجهة الكبيرة القادمة؟ 🔥⚽</p><div class="actions"><button onclick="like(this)">♡ إعجاب</button><span>💬 8 تعليقات</span><span>↗ مشاركة</span></div></div>
+ <div class="card post"><div class="post-head"><div class="avatar">90</div><div><div class="postname">محلل الملعب</div><div class="posttime">منذ ساعة · رأي كروي</div></div></div><p>قوة خط الوسط ممكن تكون مفتاح الفوز في المباريات الكبيرة.</p><div class="actions"><button onclick="like(this)">♡ إعجاب</button><span>💬 3 تعليقات</span><span>↗ مشاركة</span></div></div>
+ </div>
+ <div class="notice">المجتمع مخصص لكرة القدم فقط. نرفض الإساءة والعنصرية والمحتوى المخالف.</div>
+</section>
+<section class="page" id="profile">
+ <div class="card profile"><div class="bigavatar">⚽</div><h2 style="margin:5px 0">مشجع +90</h2><div class="verified">◆ شارة +90 التجريبية</div><p class="muted">عاشق لكرة القدم · عضو في مجتمع +90</p><div class="grid2"><div class="stat"><strong>12</strong><span>منشور</span></div><div class="stat"><strong>86</strong><span>متابع</span></div></div><button class="btn secondary" style="margin-top:14px" onclick="toast('تعديل الملف الشخصي قريباً')">تعديل الملف الشخصي</button></div>
+ <div class="section-head"><h2>إنجازاتي</h2></div><div class="grid2"><div class="stat">🏅<br><b>عضو نشيط</b><br><span>شارة تجريبية</span></div><div class="stat">⚽<br><b>مشجع كروي</b><br><span>شارة تجريبية</span></div></div>
+</section>
+</main>
+<nav class="bottom">
+ <button class="nav active" data-page="home" onclick="showPage('home',this)"><i>⌂</i>الرئيسية</button>
+ <button class="nav" data-page="matches" onclick="showPage('matches',this)"><i>⚽</i>المباريات</button>
+ <button class="nav" data-page="fantasy" onclick="showPage('fantasy',this)"><i>🏆</i>الفانتازي</button>
+ <button class="nav" data-page="community" onclick="showPage('community',this)"><i>◎</i>المجتمع</button>
+ <button class="nav" data-page="profile" onclick="showPage('profile',this)"><i>♙</i>حسابي</button>
+</nav><div class="toast" id="toast"></div>
+<script>
+function showPage(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(el)el.classList.add('active');else document.querySelector('[data-page="'+id+'"]').classList.add('active');window.scrollTo(0,0)}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>t.style.display='none',2200)}
+function selectTab(el){el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('selected'));el.classList.add('selected');toast('سيتم تفعيل تصفية البطولات لاحقاً')}
+function like(btn){btn.textContent=btn.textContent.includes('♡')?'♥ أعجبني':'♡ إعجاب';btn.style.color=btn.textContent.includes('♥')?'#e5b957':''}
+function addPost(){let inp=document.getElementById('postText');let v=inp.value.trim();if(!v){toast('اكتب منشورك أولاً');return}let card=document.createElement('div');card.className='card post';card.innerHTML='<div class="post-head"><div class="avatar">م</div><div><div class="postname">مشجع +90</div><div class="posttime">الآن · منشور تجريبي</div></div></div>';let p=document.createElement('p');p.textContent=v;let a=document.createElement('div');a.className='actions';a.innerHTML='<button onclick="like(this)">♡ إعجاب</button><span>💬 تعليق</span><span>↗ مشاركة</span>';card.append(p,a);document.getElementById('posts').prepend(card);inp.value='';toast('تمت إضافة منشورك في هذه التجربة')}
+</script>
+</body></html>
