@@ -125,7 +125,32 @@ async function loadFixtures() {
         '<div class="card">لا توجد مباريات مسجلة لهذا اليوم.</div>';
       return;
     }
+function getMatchImportance(match) {
+  const league = (match.league.name || '').toLowerCase();
+  const country = (match.league.country || '').toLowerCase();
 
+  let score = 0;
+
+  if (league.includes('champions league')) score += 100;
+  if (league.includes('europa league')) score += 80;
+  if (league.includes('conference league')) score += 60;
+
+  if (
+    league.includes('premier league') ||
+    league.includes('la liga') ||
+    league.includes('serie a') ||
+    league.includes('bundesliga') ||
+    league.includes('ligue 1')
+  ) score += 40;
+
+  if (country.includes('libya')) score += 35;
+
+  return score;
+}
+
+matches.sort((a, b) =>
+  getMatchImportance(b) - getMatchImportance(a)
+);
     matchlist.innerHTML = matches.map(match => {
       const home = match.teams.home;
       const away = match.teams.away;
