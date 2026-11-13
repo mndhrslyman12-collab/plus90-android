@@ -80,8 +80,126 @@ textarea,input,select{width:100%;background:#0a121b;color:white;border:1px solid
 </main>
 <nav class="bottom"><button class="nav active" data-page="home" onclick="go('home',this)"><i>⌂</i>الرئيسية</button><button class="nav" data-page="matches" onclick="go('matches',this)"><i>⚽</i>المباريات</button><button class="nav" data-page="fantasy" onclick="go('fantasy',this)"><i>🏆</i>الفانتازي</button><button class="nav" data-page="premium" onclick="go('premium',this)"><i>◆</i>Premium</button><button class="nav" data-page="community" onclick="go('community',this)"><i>◎</i>المجتمع</button><button class="nav" data-page="rankings" onclick="go('rankings',this)"><i>♛</i>الشرف</button><button class="nav" data-page="profile" onclick="go('profile',this)"><i>♙</i>حسابي</button></nav><div class="toast" id="toast"></div>
 <script>
-const clubs=[['🇪🇸 الدوري الإسباني','RMA','ريال مدريد','2 : 1','FCB','برشلونة','انتهت'],['🏴 الدوري الإنجليزي','LIV','ليفربول','20:00','MCI','مانشستر سيتي','قادمة'],['🇮🇹 الدوري الإيطالي','JUV','يوفنتوس','19:45','INT','إنتر ميلان','قادمة'],['🇩🇪 الدوري الألماني','BVB','دورتموند','18:30','BAY','بايرن ميونخ','قادمة'],['🇫🇷 الدوري الفرنسي','PSG','باريس','21:00','OL','ليون','قادمة'],['🏆 دوري أبطال أوروبا','ARS','أرسنال','22:00','RMA','ريال مدريد','قادمة']];
-document.getElementById('matchlist').innerHTML=clubs.map((m,i)=>`<div class="card"><div class="matchtop"><span class="league">${m[0]}</span><span class="status">${m[6]}</span></div><div class="teams"><div class="club"><div class="crest">${m[1]}</div>${m[2]}</div><div class="score">${m[3]}<small>${m[6]==='انتهت'?'نهاية المباراة':'موعد المباراة'}</small></div><div class="club"><div class="crest">${m[4]}</div>${m[5]}</div></div><div class="matchfoot"><span>بيانات تجريبية</span><button class="link" onclick="toast('تفاصيل المباراة قيد التطوير')">التفاصيل ›</button></div></div>`).join('');
+
+async function loadFixtures() {
+  const matchlist = document.getElementById('matchlist');
+
+  matchlist.innerHTML = '<div class="card">جاري تحميل المباريات... ⚽</div>';
+
+  function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[char]);
+  }
+
+  try {
+    const today = new Date();
+    const date = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, '0'),
+      String(today.getDate()).padStart(2, '0')
+    ].join('-');
+
+    const response = await fetch(
+      `https://plus90-football-api.mndhrslyman12.workers.dev/fixtures?date=${date}`
+    );
+
+    const data = await response.json();
+
+    if (data.errors && Object.keys(data.errors).length) {
+      throw new Error(
+        data.errors.rateLimit
+          ? 'وصلنا لحد الطلبات مؤقتاً. حاول بعد قليل.'
+          : 'تعذر جلب بيانات المباريات.'
+      );
+    }
+
+    const matches = data.response || [];
+
+    if (!matches.length) {
+      matchlist.innerHTML =
+        '<div class="card">لا توجد مباريات مسجلة لهذا اليوم.</div>';
+      return;
+    }
+
+    matchlist.innerHTML = matches.map(match => {
+      const home = match.teams.home;
+      const away = match.teams.away;
+      const status = match.fixture.status.short;
+
+      const finished = ['FT', 'AET', 'PEN'].includes(status);
+      const live = ['1H', 'HT', '2H', 'ET', 'P', 'LIVE', 'BT'].includes(status);
+
+      const time = new Date(match.fixture.date).toLocaleTimeString('ar-LY', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const statusText = finished
+        ? 'انتهت'
+        : live
+          ? 'مباشرة'
+          : status === 'PST' || status === 'CANC'
+            ? 'مؤجلة'
+            : 'قادمة';
+
+      const score = finished || live
+        ? `${match.goals.home ?? 0} : ${match.goals.away ?? 0}`
+        : time;
+
+      const homeLogo = home.logo
+        ? `<img src="${escapeHTML(home.logo)}" alt="" style="width:100%;height:100%;object-fit:contain">`
+        : escapeHTML(home.name);
+
+      const awayLogo = away.logo
+        ? `<img src="${escapeHTML(away.logo)}" alt="" style="width:100%;height:100%;object-fit:contain">`
+        : escapeHTML(away.name);
+
+      return `
+        <div class="card">
+          <div class="matchtop">
+            <span class="league">${escapeHTML(match.league.name)}</span>
+            <span class="status">${statusText}</span>
+          </div>
+
+          <div class="teams">
+            <div class="club">
+              <div class="crest">${homeLogo}</div>
+              ${escapeHTML(home.name)}
+            </div>
+
+            <div class="score">
+              ${score}
+              <small>${finished ? 'نهاية المباراة' : live ? 'نتيجة مباشرة' : 'موعد المباراة'}</small>
+            </div>
+
+            <div class="club">
+              <div class="crest">${awayLogo}</div>
+              ${escapeHTML(away.name)}
+            </div>
+          </div>
+
+          <div class="matchfoot">
+            <span>${escapeHTML(match.league.country || '')}</span>
+            <button class="link" onclick="toast('تفاصيل المباراة قيد التطوير')">
+              التفاصيل ›
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  } catch (error) {
+    matchlist.innerHTML =
+      `<div class="card">${escapeHTML(error.message || 'حدث خطأ في تحميل المباريات.')}</div>`;
+  }
+}
+
+loadFixtures();
 function go(id,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));let b=el||document.querySelector('[data-page="'+id+'"]');if(b)b.classList.add('active');if(id==='notifications')document.getElementById('dot').style.display='none';scrollTo({top:0,behavior:'smooth'})}
 function toast(s){let t=document.getElementById('toast');t.textContent=s;t.style.display='block';clearTimeout(window.tmr);window.tmr=setTimeout(()=>t.style.display='none',2200)}
 function pill(b){b.parentElement.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));b.classList.add('active');toast('تم اختيار '+b.textContent)}
