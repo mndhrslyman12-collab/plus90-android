@@ -1,5 +1,6 @@
+
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const cors = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
@@ -18,17 +19,17 @@ export default {
       });
     }
 
-    if (!env.API_FOOTBALL_KEY) {
-      return Response.json(
-        { error: "API key not configured" },
-        { status: 500, headers: cors }
-      );
-    }
-
     if (url.pathname !== "/fixtures") {
       return Response.json(
         { error: "Not found" },
         { status: 404, headers: cors }
+      );
+    }
+
+    if (!env.API_FOOTBALL_KEY) {
+      return Response.json(
+        { error: "API key not configured" },
+        { status: 500, headers: cors }
       );
     }
 
@@ -41,7 +42,25 @@ export default {
       );
     }
 
-    const response = await fetch(
+    const cache = caches.default;
+    const cacheKey = new Request(url.toString(), {
+      method: "GET"
+    });
+
+    const cached = await cache.match(cacheKey);
+
+    if (cached) {
+      return new Response(cached.body, {
+        status: cached.status,
+        headers: {
+          ...Object.fromEntries(cached.headers),
+          ...cors,
+          "X-Plus90-Cache": "HIT"
+        }
+      });
+    }
+
+    const apiResponse = await fetch(
       `https://v3.football.api-sports.io/fixtures?date=${date}`,
       {
         headers: {
@@ -50,12 +69,24 @@ export default {
       }
     );
 
-    return new Response(await response.text(), {
-      status: response.status,
+    const data = await apiResponse.text();
+
+    const response = new Response(data, {
+      status: apiResponse.status,
       headers: {
         ...cors,
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "public, max-age=60",
+        "X-Plus90-Cache": "MISS"
       }
     });
+
+    if (apiResponse.ok) {
+      ctx.waitUntil(
+        cache.put(cacheKey, response.clone())
+      );
+    }
+
+    return response;
   }
 };
