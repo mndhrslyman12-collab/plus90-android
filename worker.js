@@ -76,7 +76,7 @@ export default {
       headers: {
         ...cors,
         "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=60",
+        "Cache-Control": "public, max-age=300",
         "X-Plus90-Cache": "MISS"
       }
     });
